@@ -1,4 +1,5 @@
 import { cart } from '../data/cart.js';
+import { products } from '../data/products.js';
 
 let productHTML = '';
 
@@ -56,38 +57,28 @@ products.forEach((product)=>{
 })
 
 document.querySelector('.js-product-grid').innerHTML = productHTML;
+
+
 const addedMessageTimeouts = {};
+
+
 
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) =>{
     button.addEventListener('click',()=>{
         const { productId } = button.dataset;
 
-        let matchingItem;
-        cart.forEach((item) =>{
-            if (item.productId === productId)
-                matchingItem = item;
-        })
+        addToCart(productId);
 
-        const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-        const quantity = Number(quantitySelector.value);
-
-        if (matchingItem){
-            matchingItem.quantity += quantity;
-        } else {
-            cart.push({
-                productId,
-                quantity
-            });
-        }
-
+        // this one for showing cart quantity on header
         let cartQuantity = 0;
 
-        cart.forEach((item) =>{
-            cartQuantity += item.quantity;
+        cart.forEach((cartItem) =>{
+            cartQuantity += cartItem.quantity;
         });
 
         document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 
+        // this is for creating the (added) message
         const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
 
         addedMessage.classList.add('added-to-cart-visible');
