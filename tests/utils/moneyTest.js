@@ -9,5 +9,9 @@ describe('test suite: format currency', () => {
   });
   it('rounds up to the nearest cent', () => {
     expect(formatCurrency(2000.5)).toEqual('20.01')
+    expect(formatCurrency(2000.4)).toEqual('20.00')
+  })
+  it('test with negative no.: ', () => {
+    expect(formatCurrency(-500)).toEqual('-5.00')
   })
 });
